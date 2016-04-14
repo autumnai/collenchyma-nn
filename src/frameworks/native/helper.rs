@@ -5,9 +5,6 @@ use co::memory::MemoryType;
 
 #[derive(Debug, Copy, Clone)]
 #[allow(missing_docs)]
-pub struct ConvolutionConfig;
-#[derive(Debug, Copy, Clone)]
-#[allow(missing_docs)]
 pub struct NormalizationConfig;
 #[derive(Debug, Copy, Clone)]
 #[allow(missing_docs)]
@@ -278,66 +275,12 @@ macro_rules! impl_ops_tanh_for {
     );
 }
 
-#[macro_export]
-macro_rules! impl_ops_convolution_for {
-    ($t:ident, $b:ty) => (
-        impl ::plugin::Convolution<$t> for $b {
-            fn new_convolution_config(
-                &self,
-                src: &::co::tensor::SharedTensor<$t>,
-                dest: &::co::tensor::SharedTensor<$t>,
-                filter: &mut ::co::tensor::SharedTensor<$t>,
-                stride: &[i32],
-                zero_padding: &[i32]
-            ) -> Result<Self::CC, ::co::error::Error> {
-                unimplemented!();
-                Ok(helper::ConvolutionConfig)
-            }
-            fn convolution(
-                &self,
-                x: &mut ::co::tensor::SharedTensor<$t>,
-                result: &mut ::co::tensor::SharedTensor<$t>,
-                config: &Self::CC
-            ) -> Result<(), ::co::error::Error> {
-                unimplemented!();
-                Ok(())
-            }
-
-            fn convolution_plain(
-                &self,
-                x: &::co::tensor::SharedTensor<$t>,
-                result: &mut ::co::tensor::SharedTensor<$t>,
-                config: &Self::CC
-            ) -> Result<(), ::co::error::Error> {
-                unimplemented!();
-                Ok(())
-            }
-
-            fn convolution_grad(
-                &self,
-                x: &mut ::co::tensor::SharedTensor<$t>,
-                x_diff: &mut ::co::tensor::SharedTensor<$t>,
-                result: &mut ::co::tensor::SharedTensor<$t>,
-                result_diff: &mut ::co::tensor::SharedTensor<$t>,
-                config: &Self::CC
-            ) -> Result<(), ::co::error::Error> {
-                unimplemented!();
-                Ok(())
-            }
-
-            fn convolution_grad_plain(
-                &self,
-                x: &::co::tensor::SharedTensor<$t>,
-                x_diff: &::co::tensor::SharedTensor<$t>,
-                result: &::co::tensor::SharedTensor<$t>,
-                result_diff: &mut ::co::tensor::SharedTensor<$t>,
-                config: &Self::CC
-            ) -> Result<(), ::co::error::Error> {
-                unimplemented!();
-                Ok(())
-            }
-        }
-    );
+#[derive(Debug, Clone)]
+#[allow(missing_docs)]
+pub struct ConvolutionConfig {
+    pub filter_shape: Vec<usize>,
+    pub stride: Vec<i32>,
+    pub padding: Vec<i32>,
 }
 
 #[macro_export]
